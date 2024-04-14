@@ -20,7 +20,7 @@
             </Text>
         </View>
             <View style={{display:"flex",justifyContent:"center",alignItems:"center", marginTop:20}}>
-                <Link replace href="./servey/0" asChild>
+                <Link replace href="./servey" asChild>
                     <Pressable >
                     <View style={{width:260 ,padding:15,backgroundColor:"#2AB802"}}>
                         <Text style={{color:"#FFF",fontSize:24,fontWeight:"bold",textAlign:"center"}}>Start the test</Text>
