@@ -1,9 +1,52 @@
 import { Image } from "expo-image";
-import { Link, Redirect } from "expo-router";
+import { Link, Redirect, router } from "expo-router";
+import { useState } from "react";
 import { Button, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function Page() {
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
+    const handleSignUp = () => {
+        router.navigate("/home");
+        if (password !== confirmPassword) {
+            alert("Passwords do not match");
+            return;
+        }
+
+        // user registring data 
+        const userData = {
+            username: username,
+            email: email,
+            password: password,
+        };
+
+        // Send user data to API
+        fetch('https://younesao.pythonanywhere.com:5000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('sign up error');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            router.navigate("/home");
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+            alert('Registration failed. Please try again later.');
+        });
+    };
+    
     return(
     <>
         <View style={styles.container}>
@@ -24,35 +67,40 @@ export default function Page() {
                         placeholder="Username"
                         placeholderTextColor="rgba(255, 255, 255, 0.7)"
                         autoCapitalize="none"
-                        autoCorrect={false}/>
+                        autoCorrect={false}
+                        value={username}
+                        onChangeText={setUsername}/>
                     <TextInput
                         style={styles.input}
                         placeholder="E-mail"
                         placeholderTextColor="rgba(255, 255, 255, 0.7)"
                         autoCapitalize="none"
-                        autoCorrect={false}/>
+                        autoCorrect={false}
+                        value={email}
+                        onChangeText={setEmail}/>
                     <TextInput
                         style={styles.input}
                         placeholder="Password"
                         placeholderTextColor="rgba(255, 255, 255, 0.7)"
                         secureTextEntry
-                    />
+                        value={password}
+                        onChangeText={setPassword}/>
                     <TextInput
                         style={styles.input}
-                        placeholder="renter password"
+                        placeholder="Confirm Password"
                         placeholderTextColor="rgba(255, 255, 255, 0.7)"
                         secureTextEntry
-                    />
+                        value={confirmPassword}
+                        onChangeText={setConfirmPassword}/>
                 </View>
                 
                 <View style={{display:"flex",justifyContent:"center",alignItems:"center", marginTop:20}}>
-                <Link replace href="./home" asChild>
-                    <Pressable >
+            
+                    <Pressable onPress={handleSignUp}>
                     <View style={{width:260 ,padding:15,backgroundColor:"#2AB802"}}>
                         <Text style={{color:"#FFF",fontSize:24,fontWeight:"bold",textAlign:"center"}}>Sign up</Text>
                     </View>
                     </Pressable>
-                </Link>
                 </View>
 
                 <View style={{display:"flex",justifyContent:"center",alignItems:"center", marginTop:20}}>
