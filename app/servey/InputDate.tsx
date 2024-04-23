@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { View, Text, TextInput } from 'react-native';
 
 interface myProps {
     label: string;
+    style?:CSSProperties;
+
   }
   
   const InputDate: React.FC<myProps> = (props) => {

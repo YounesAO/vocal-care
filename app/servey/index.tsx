@@ -2,38 +2,61 @@ import Colors from "@/constants/Colors";
 import { Link, Redirect, router, useGlobalSearchParams, useLocalSearchParams } from "expo-router";
 import Checkbox from 'expo-checkbox';
 import { Button, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import {Image}from "expo-image";
 import { useState } from "react";
-import InputField from "./InputField";
 import InputSelect from "./InputSelect";
-import InputDate from "./InputDate";
 export default function Page() {
-  const [userName, setUserName] = useState('');
   const [gender, setGender] = useState('');
-  const [birthDate, setBirthDate] = useState('');
+  const [age, setAge] = useState('');
   const [occupation, setOccupation] = useState('');
   const [countryRegion, setCountryRegion] = useState('');
 
-  const handleSubmit = async () => {
-    router.navigate(`/symptoms/0`)
+  const [genderError, setGenderError] = useState(false);
+  const [ageError, setAgeError] = useState(false);
+  const [occupationError, setOccupationError] = useState(false);
+  const [countryRegionError, setCountryRegionError] = useState(false);
 
+  const validateField = (value: string) => {
+    return value !== null && value !== "" && !value.startsWith("select");
+};
+  const handleSubmit = async () => {
+    const data = {
+      gender,
+      age,
+      occupation,
+      countryRegion,
+    }
+    console.log(data)
+
+    setGenderError(!validateField(data.gender));
+    setAgeError(!validateField(data.age));
+    setOccupationError(!validateField(data.occupation));
+    setCountryRegionError(!validateField(data.countryRegion));
+    if (!(
+      data.gender !== null && data.gender !== "" && !data.gender.startsWith("select") &&
+      data.age !== null && data.age !== "" && !data.age.toString().startsWith("select") &&
+      data.occupation !== null && data.occupation !== "" && !data.occupation.startsWith("select") &&
+      data.countryRegion !== null && data.countryRegion !== "" && !data.countryRegion.startsWith("select")
+  )) {
+      alert('One or more fields are not selected');
+  } else {
+    
+    
     try {
-        const response = await fetch('http://127.0.0.1:5000/meta_data', {
+        const response = await fetch('http://192.168.45.1:5000/meta_data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                userName,
-                gender,
-                birthDate,
-                occupation,
-                countryRegion,
-            }),
+            body: JSON.stringify(data),
         });
         if (response.ok) {
-            console.log('Data submitted successfully');
-            router.navigate(`/symptoms/0`)
+          const responseData = await response.json();
+          if (responseData.user) {
+            const user_id = responseData.user
+              console.log('Inserted ID:', responseData.user);
+
+              router.navigate(`/symptoms/${user_id}`)
+          }  
 
         } else {
             console.error('Failed to submit data');
@@ -41,6 +64,7 @@ export default function Page() {
     } catch (error) {
         console.error('Error:', error);
     }
+  }
 };
 
         return (
@@ -51,11 +75,65 @@ export default function Page() {
           
           <View style={styles.container}>
             <View style={{width:"100%"}}>
-              <InputField  label="UserName" placeholder="Enter your name"/>
-              <InputSelect label="Gender" data ={["Select your gender","Male","Female"]}></InputSelect>
-              <InputDate label="Brith Date"></InputDate>
-              <InputSelect label="Occupation" data ={["Teacher","Professor"]}></InputSelect>
-              <InputSelect label="Country/Region" data ={["Select you Country","Morocco","Monaco"]}></InputSelect>
+              <InputSelect 
+                value={gender}
+                onChange={setGender}
+                label="Gender" 
+                data ={["Select your gender","Male","Female"]}
+                error ={genderError}/>
+              <InputSelect 
+                value={age}
+                onChange={setAge}
+                label="Age" 
+                data ={["Select your age",
+                        "Under 20",
+                        "20-29",
+                        "30-39",
+                        "40-49",
+                        "50-59",
+                        "60-69",
+                        "70-79",
+                        "80-89",
+                        "90 or older"]}
+                error = {ageError}/>
+              <InputSelect 
+                value={occupation}
+                onChange={setOccupation}
+                label="Occupation" 
+                data ={["Select your occupation", 
+                        "Teacher",
+                        "Doctor",
+                        "Engineer",
+                        "Nurse",
+                        "Software Developer",
+                        "Accountant",
+                        "Artist",
+                        "Writer",
+                        "Chef",
+                        "Electrician",
+                        "Plumber",
+                        "Lawyer",
+                        "Other"]}
+                error = {occupationError}/>
+              <InputSelect 
+              value={countryRegion}
+              onChange={setCountryRegion}
+                label="Region" 
+                data ={["Select your Region",
+                  "Tanger-Tétouan-Al Hoceïma",
+                  "L'Oriental",
+                  "Fès-Meknès",
+                  "Rabat-Salé-Kénitra",
+                  "Béni Mellal-Khénifra",
+                  "Casablanca-Settat",
+                  "Marrakech-Safi",
+                  "Drâa-Tafilalet",
+                  "Souss-Massa",
+                  "Guelmim-Oued Noun",
+                  "Laâyoune-Sakia El Hamra",
+                  "Dakhla-Oued Ed-Dahab"
+              ]}
+                error ={countryRegionError} />
             </View>
               
           <View style={{display:"flex",justifyContent:"center",alignItems:"center", marginTop:20}}>

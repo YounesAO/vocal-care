@@ -49,7 +49,7 @@
     },
     main: {
         flex: 1,
-        paddingTop:"60%",
+        paddingTop:60,
         maxWidth: 960,
         marginHorizontal: "auto",
     },

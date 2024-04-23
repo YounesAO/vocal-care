@@ -10,7 +10,6 @@ export default function Page() {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     const handleSignUp = () => {
-        router.navigate("/home");
         if (password !== confirmPassword) {
             alert("Passwords do not match");
             return;
@@ -24,7 +23,7 @@ export default function Page() {
         };
 
         // Send user data to API
-        fetch('https://younesao.pythonanywhere.com:5000/register', {
+        fetch('https://192.168.45.1:5000/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

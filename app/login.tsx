@@ -8,10 +8,9 @@ export default function Page() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const handleLogin = () => {
-        router.navigate("/home");
 
         // Send login request to backend
-        fetch('http://127.0.0.1:5000/login', {
+        fetch('http://192.168.45.1:5000/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

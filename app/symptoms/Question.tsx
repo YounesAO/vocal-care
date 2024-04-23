@@ -3,8 +3,12 @@ import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 
 interface myProps {
-    value: string;
-  }
+    name: string;
+    description:string
+    selectedSymptoms: string[]; // Assuming selectedSymptoms is an array of strings
+    handleSymptomSelection: (symptomName: string) => void; // Assuming handleSymptomSelection is a function that takes a string argument
+}
+  
   
   const Question: React.FC<myProps> = (props) => {
     const [isChecked, setChecked] = useState(false);
@@ -12,12 +16,17 @@ interface myProps {
   return (
     <View style={{display:'flex',flexDirection:"row" ,justifyContent:'flex-start',alignItems:'center'}}>
         <Checkbox
-          value={isChecked}
-          onValueChange={setChecked}
+          
+          value={props.selectedSymptoms.includes(props.name)}
+          onValueChange={() => props.handleSymptomSelection(props.name as string)} // Ensure props.name is cast to string
+          
           color={isChecked ? '#154A3D' : undefined}
-          style={{marginRight:2}} > 
+          style={{marginRight:2,width:20,height:20}} > 
         </Checkbox>
-        <Text style={{fontSize: 16,fontWeight:"600",color: "#000000",marginTop:15,marginBottom:15,marginLeft:2}}>{props.value}</Text>
+        <View style={{display:"flex"}}>
+          <Text style={{fontSize: 16,fontWeight:"600",color: "#000000",marginTop:15,marginBottom:0,marginLeft:3}}>{props.name}</Text>
+          <Text style={{fontSize: 12,fontWeight:"600",color: "#000000",marginTop:0,marginBottom:15,marginLeft:4}}>{props.description}</Text>
+        </View>
     </View>
   );
 }
