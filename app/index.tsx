@@ -47,7 +47,7 @@ export default function Page() {
                         justifyContent:"center",
                         alignItems:"center", 
                         marginTop:20}}>
-          <Link push href="./login" asChild>
+          <Link replace href="./test" asChild>
             <Pressable disabled ={!isChecked} >
               <View style={{
                             width:300 ,

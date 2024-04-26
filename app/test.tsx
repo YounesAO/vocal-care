@@ -29,7 +29,7 @@
                 </Link>
                 </View>
 
-
+            {/*  
             <View style={{display:"flex",justifyContent:"center",alignItems:"center", marginTop:20}}>
                 <Pressable onPress={router.back}>
                 <View style={{width:260 ,padding:15,backgroundColor:"#F04343", borderWidth:2,borderColor:"#F04343"}}>
@@ -37,6 +37,7 @@
                 </View>
                 </Pressable>
             </View>
+            */}
         </View>
     );
     }

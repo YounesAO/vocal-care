@@ -59,10 +59,10 @@ export default function Page() {
           }  
 
         } else {
-            console.error('Failed to submit data');
+            alert('Failed to submit data');
         }
     } catch (error) {
-        console.error('Error:', error);
+      alert('Error:de connexion au serveur');
     }
   }
 };

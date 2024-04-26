@@ -37,10 +37,6 @@ export default function Page() {
   var id =local.id;
   console.log("retrived",id)
 
-   
-
-
-
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -52,7 +48,7 @@ export default function Page() {
           
         } catch (error) {
           // Handle any errors
-          console.error('Error fetching data:', error);
+          alert('Error fetching data:');
         }
       };
   
@@ -104,11 +100,11 @@ export default function Page() {
             router.navigate("/record")
           } else {
             // Handle error
-            console.error('Failed to send data:', response.statusText);
+            alert('Failed to send data:');
           }
         } catch (error) {
           // Handle network or other errors
-          console.error('Error sending data:', error);
+          alert('Error sending data');
         }
       
 
@@ -137,7 +133,7 @@ export default function Page() {
                   </View>
                 </View>
                 <View style={{display:isChecked ?"none": "flex"}}>
-                { symptoms.map(categorie => (
+                { symptoms.map((categorie, index) => (
                   <View style={{width:"100%"}}>
                     <Text style={{color:"#194A3C",fontWeight:"bold",fontSize:20}}>{categorie.key+" - "+categorie.label}</Text>
                     {categorie.data.map((item, index) => (

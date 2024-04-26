@@ -1,10 +1,23 @@
-import { cloneElement, useState } from 'react';
-import { View, StyleSheet, Button, Text } from 'react-native';
+import { cloneElement, useEffect, useState } from 'react';
+import { View, StyleSheet,Pressable, Button, Text } from 'react-native';
 import { Audio } from 'expo-av';
 import { router } from 'expo-router';
 import * as DocumentPicker from 'expo-document-picker';
 
 export default function App() {
+  const [timer, setTimer] = useState(0);
+  useEffect(() => {
+    let intervalId;
+    if (recording) {
+      intervalId = setInterval(() => {
+        setTimer(prevTimer => prevTimer + 1);
+      }, 1000);
+    } else {
+      clearInterval(intervalId);
+      setTimer(0);
+    }
+    return () => clearInterval(intervalId);
+  }, [recording]);
     const pickAudio = async () => {
         try {
             const result = await DocumentPicker.getDocumentAsync({ type: 'audio/*', copyToCacheDirectory: false });
@@ -63,20 +76,30 @@ export default function App() {
 
   return (
     <>
+      <View  style={{display:"flex", justifyContent:"center",alignItems:"center",backgroundColor:"#194A3C",borderWidth:1,width:"100%",height:80}}>
+        <Text style={{color:"#ffffff",fontWeight:"bold",fontSize:20}}>Voice test sample</Text>
+      </View>
     <View style={styles.container}>
-         <View style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+          
+        <View style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
         
         <Text style={styles.title}>Record a vocal test </Text>
         <Text style={styles.subtitle}>You can either record or import existing audio file  
         </Text>
         </View>
         <View style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-            <View style={{ width:100,margin:10}} >
-                <Button 
-                    title={recording ? 'Stop Recording' : 'Start Recording'}
-                    onPress={recording ? stopRecording : startRecording}
-                />
+            <View style={{}} >
+            <Pressable 
+                    onPress={recording ? stopRecording : startRecording}>
+              <View style={{width:150,height:150,display:"flex",justifyContent:'center',alignItems:'center' ,padding:10,borderRadius:100,backgroundColor:recording ?"red":"#2AB802"}}>
+                <Text style={{color:"#ffffff",fontSize:14,fontWeight:"bold",textAlign:"center"}}>{recording ? 'Stop Recording' : 'Start Recording'}</Text>
+              </View>
+            </Pressable>
             </View>
+            <View>
+            {recording && <Text style={styles.timer}>Recording time: {timer} seconds</Text>}
+            </View>
+            <View style={{display:'flex',justifyContent:'center',alignItems:'center' ,width:"100%"}}><Text>or</Text></View>
             <View style={{ width:100,margin:10}} >
                 <Button title="Pick Audio" onPress={pickAudio} />
             </View>
@@ -107,5 +130,9 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize:20,
     color: "#38434D",
-  },
+  },timer: {
+    fontSize: 16,
+    color: "black",
+    marginTop: 10,
+  }
 });
