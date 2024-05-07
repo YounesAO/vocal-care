@@ -10,19 +10,18 @@
         <View style={styles.container}>
         
         <View style={styles.main}>
-            <View style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+            <View style={{ marginTop:100}}>
             
             <Text style={styles.title}>Take a test </Text>
             <Text style={styles.subtitle}>In this test you need to describe your symptoms and record a sample of your voice
             </Text>
             </View>
-            <Text style={{marginTop:4, fontSize:19,}}>Please read and accept our 
-            </Text>
+           
         </View>
-            <View style={{display:"flex",justifyContent:"center",alignItems:"center", marginTop:20}}>
-                <Link replace href="./servey" asChild>
+            <View style={{flex:1,display:"flex",justifyContent:"center",alignItems:"center", marginTop:2}}>
+                <Link  href="./servey" asChild>
                     <Pressable >
-                    <View style={{width:260 ,padding:15,backgroundColor:"#2AB802"}}>
+                    <View style={{width:260 ,padding:15,backgroundColor:"#2AB802" ,borderRadius:15}}>
                         <Text style={{color:"#FFF",fontSize:24,fontWeight:"bold",textAlign:"center"}}>Start the test</Text>
                     </View>
                     </Pressable>
@@ -49,18 +48,21 @@
         padding: 24,
     },
     main: {
-        flex: 1,
+        flex: 2,
         paddingTop:60,
         maxWidth: 960,
         marginHorizontal: "auto",
     },
     title: {
-        fontSize: 40,
+        textAlign:'center',
+        fontSize: 50,
         fontWeight: "bold",
         color:"#154A3D",
 
     },
     subtitle: {
+        marginTop:10,
+        textAlign:'center',
         fontSize:20,
         color: "#38434D",
     },

@@ -20,9 +20,7 @@ export default function Page() {
           
           <Text style={styles.title}>Vocal care</Text>
           <Text style={styles.subtitle}>A medical app for detecting voice pathologies ,to get started :</Text>
-        </View>
-        <Text style={{marginTop:4, fontSize:19,}}>Please read and accept our</Text>
-        
+        <Text style={{marginTop:3, fontSize:19,}}>Please read and accept our</Text>
         <Link push href="./termes" asChild>
           <Pressable>
             <Text style={{
@@ -46,20 +44,21 @@ export default function Page() {
                         display:"flex",
                         justifyContent:"center",
                         alignItems:"center", 
-                        marginTop:20}}>
+                        marginTop:6}}>
           <Link replace href="./test" asChild>
             <Pressable disabled ={!isChecked} >
               <View style={{
                             width:300 ,
                             padding:15,
-                            backgroundColor:isChecked?"#2AB802":"#D2D2D2",}}>
+                            backgroundColor:isChecked?"#2AB802":"#D2D2D2",borderRadius:15,marginTop:13}}>
                 <Text style={{color:"#FFF",fontSize:24,fontWeight:"bold",textAlign:"center"}}>Get started</Text>
               </View>
             </Pressable>
           </Link>
           </View>
       </View>
-    
+      </View>
+
     
     </View>
   );

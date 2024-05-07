@@ -63,7 +63,7 @@ const ProgressBar = () => {
         setMaxProgress(max);
     }, [indexes]);
 
-    const getColor = (index) => {
+    const getColor = (index:number) => {
         if (index <= 20) {
             return ['green', 'lightgreen'];
         } else if (index <= 40) {
@@ -83,7 +83,8 @@ const ProgressBar = () => {
             <View key={index} style={styles.barContainer}>
                 <Animated.View
                     style={[styles.bar, {
-                        width: progress,
+                        width: reversedIndexes[index]*5,
+                   
                         backgroundColor: progress.interpolate({
                             inputRange: [0, 700],
                             outputRange: getColor(reversedIndexes[index])
@@ -122,6 +123,7 @@ const ProgressBar = () => {
                     </Pressable>
                 </Link>
             </View>
+            
         </View>
     );
 };
@@ -142,11 +144,13 @@ const styles = StyleSheet.create({
         height: 200,
     },
     progressBarContainer: {
+        width:200,
         flexDirection: 'column',
         alignItems: 'center',
         marginTop: 20, // Ajustement pour l'espace supplémentaire
     },
     barContainer: {
+        
         marginBottom: 20,
         alignItems: 'center',
     },

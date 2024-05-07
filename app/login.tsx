@@ -10,7 +10,7 @@ export default function Page() {
     const handleLogin = () => {
 
         // Send login request to backend
-        fetch('http://192.168.45.1:5000/login', {
+        fetch('http://192.168.138.1:5000/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

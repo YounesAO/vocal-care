@@ -2,30 +2,36 @@ import Colors from "@/constants/Colors";
 import { Link, Redirect, router, useGlobalSearchParams, useLocalSearchParams } from "expo-router";
 import Checkbox from 'expo-checkbox';
 import { Button, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputSelect from "./InputSelect";
 export default function Page() {
+
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
   const [occupation, setOccupation] = useState('');
   const [countryRegion, setCountryRegion] = useState('');
-
+  
   const [genderError, setGenderError] = useState(false);
   const [ageError, setAgeError] = useState(false);
   const [occupationError, setOccupationError] = useState(false);
   const [countryRegionError, setCountryRegionError] = useState(false);
 
+  
   const validateField = (value: string) => {
     return value !== null && value !== "" && !value.startsWith("select");
 };
   const handleSubmit = async () => {
+
+
     const data = {
       gender,
       age,
       occupation,
       countryRegion,
     }
-    console.log(data)
+
+   
+     router.push(`/symptoms/0`,); // Remove the braces in params
 
     setGenderError(!validateField(data.gender));
     setAgeError(!validateField(data.age));
@@ -42,7 +48,7 @@ export default function Page() {
     
     
     try {
-        const response = await fetch('http://192.168.45.1:5000/meta_data', {
+        const response = await fetch('http://192.168.138.1:5000/meta_data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -101,19 +107,22 @@ export default function Page() {
                 onChange={setOccupation}
                 label="Occupation" 
                 data ={["Select your occupation", 
-                        "Teacher",
-                        "Doctor",
-                        "Engineer",
-                        "Nurse",
-                        "Software Developer",
-                        "Accountant",
-                        "Artist",
-                        "Writer",
-                        "Chef",
-                        "Electrician",
-                        "Plumber",
-                        "Lawyer",
-                        "Other"]}
+                  "Information Technology (IT)",
+                  "Healthcare",
+                  "Finance",
+                  "Education",
+                  "Engineering",
+                  "Business and Management",
+                  "Science",
+                  "Media and Communication",
+                  "Legal",
+                  "Arts and Design",
+                  "Hospitality and Tourism",
+                  "Social Services",
+                  "Government and Public Administration",
+                  "Manufacturing and Production",
+                  "Agriculture and Forestry",
+                  "Other"]}
                 error = {occupationError}/>
               <InputSelect 
               value={countryRegion}
@@ -138,7 +147,7 @@ export default function Page() {
               
           <View style={{display:"flex",justifyContent:"center",alignItems:"center", marginTop:20}}>
             <Pressable onPress={handleSubmit}>
-              <View style={{width:260 ,padding:15,backgroundColor:"#2AB802"}}>
+              <View style={{width:260 ,padding:15,backgroundColor:"#2AB802",borderRadius:15}}>
                 <Text style={{color:"#ffffff",fontSize:24,fontWeight:"bold",textAlign:"center"}}>Submit</Text>
               </View>
             </Pressable>
